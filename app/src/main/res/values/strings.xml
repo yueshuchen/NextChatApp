@@ -19,8 +19,14 @@
 
 
 
-    <!-- Strings related to register -->
+    <!-- Strings related to register layout -->
     <string name="action_register">Register</string>
     <string name="action_profile">Change Profile Picture</string>
+
+
+    <!-- Strings related to register activity -->
+
+    <string name="dialog_title">Set Profile Picture</string>
+    <string name="dialog_cancel">Cancel</string>
 
 </resources>
