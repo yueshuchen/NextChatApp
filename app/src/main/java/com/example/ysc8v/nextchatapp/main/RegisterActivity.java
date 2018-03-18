@@ -2,21 +2,18 @@ package com.example.ysc8v.nextchatapp.main;
 
 import android.Manifest;
 import android.app.Activity;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
-
 import android.net.Uri;
-
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import com.example.ysc8v.nextchatapp.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -26,7 +23,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
 
-    private ImageView faceImage;
+
 
 
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -34,13 +31,28 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+    private AutoCompleteTextView username;
+    private AutoCompleteTextView email;
+    private AutoCompleteTextView password;
+    private AutoCompleteTextView repassword;
+
+
+    private ImageView faceImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         RelativeLayout layoutswitch = findViewById(R.id.switch_picture);
+
         faceImage = findViewById(R.id.face);
+        username = findViewById(R.id.username);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        repassword = findViewById(R.id.repassword);
+
+
         layoutswitch.setOnClickListener(this);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -73,9 +85,75 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    public void startPhotoZoom(Uri uri) {
+    private void startPhotoZoom(Uri uri) {
         CropImage.activity(uri)
                 .start(this);
+    }
+
+    private boolean attemptRegister() {
+
+        username.setError(null);
+        email.setError(null);
+        password.setError(null);
+        repassword.setError(null);
+
+        boolean cancel = false;
+        View focusView = null;
+
+
+        String username_string = username.getText().toString();
+        String email_string = email.getText().toString();
+        String password_string = password.getText().toString();
+        String repassword_string = repassword.getText().toString();
+
+
+        if (TextUtils.isEmpty(username_string)) {
+            //TODO: Firebase check if username is existed or not
+            username.setError(getString(R.string.error_field_required));
+            focusView = username;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(email_string)) {
+            //TODO: Firebase check if email is existed or not
+            email.setError(getString(R.string.error_field_required));
+            focusView = email;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(password_string)) {
+            password.setError(getString(R.string.error_field_required));
+            focusView = password;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(repassword_string)) {
+            repassword.setError(getString(R.string.error_field_required));
+            focusView = repassword;
+            cancel = true;
+        }
+
+        if (!password.equals(repassword_string)) {
+            repassword.setError(getString(R.string.error_password_is_different));
+            focusView = repassword;
+            cancel = true;
+        }
+
+        if (cancel) {
+
+            focusView.requestFocus();
+            return false;
+        }
+
+
+
+
+
+
+        return true;
+
+
+
     }
 
 

@@ -8,6 +8,7 @@
     <string name="action_sign_in">Sign in</string>
 
 
+
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -20,12 +21,12 @@
 
 
     <!-- Strings related to register layout -->
+    <string name="prompt_confirmed_password">Confirmed Password</string>
+    <string name="prompt_username">User Name</string>
     <string name="action_register">Register</string>
     <string name="action_profile">Change Profile Picture</string>
-
-
-    <!-- Strings related to register activity -->
-
+    <string name="action_register_short">Register</string>
+    <string name="error_password_is_different">The password does not match</string>
     <string name="dialog_title">Set Profile Picture</string>
     <string name="dialog_cancel">Cancel</string>
 

@@ -7,16 +7,24 @@ import android.os.Bundle;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.ysc8v.nextchatapp.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class MainActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startActivity(new Intent(this, RegisterActivity.class));
-        //setContentView(R.layout.activity_main);
-        //setBottomNavigationBar();
+        if (mAuth.getInstance().getCurrentUser() == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+        } else {
+            setContentView(R.layout.activity_main);
+            setBottomNavigationBar();
+        }
     }
 
 
